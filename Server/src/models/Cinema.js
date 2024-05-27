@@ -14,6 +14,10 @@ const cinemaSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
     slug: {
       type: String,
       slug: "name",

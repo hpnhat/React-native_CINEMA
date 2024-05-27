@@ -190,22 +190,4 @@ const styles = StyleSheet.create({
   },
 });
 
-{
-  /* <View className="text-white">
-      <Text>Movie Detail Screen</Text>
-      <Text>ID: {movie.id}</Text>
-      <Text>Title: {movie.title}</Text>
-      <Text>Genre: {movie.genre}</Text>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
 
-      <MaterialIcons name="chair" size={24} color="gray" />
-      <Button
-        title="Buy ticket"
-        onPress={() =>
-          navigation.navigate("navigators/client/ClientRoute", {
-            screen: "BookingSeats",
-          })
-        }
-      />
-    </View> */
-}

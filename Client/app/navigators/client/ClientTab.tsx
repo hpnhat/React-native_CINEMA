@@ -1,4 +1,5 @@
 import Home from "@/app/(tabs)/client/Home";
+import Setting from "@/app/(tabs)/client/Setting";
 import {
   AntDesign,
   FontAwesome5,
@@ -6,12 +7,23 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Account from "../../(tabs)/client/Account";
 import Search from "../../(tabs)/client/Search";
 import Ticket from "../../(tabs)/client/Ticket";
-import MovieDetail from "@/app/(tabs)/client/MovieDetail";
 const Tabs = createBottomTabNavigator();
+
+const Stack = createNativeStackNavigator();
+
+const AccountStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="AccountHome" component={Account} />
+      <Stack.Screen name="Setting" component={Setting} />
+    </Stack.Navigator>
+  );
+};
 const ClientTab = () => {
   return (
     <>
@@ -55,7 +67,7 @@ const ClientTab = () => {
         />
         <Tabs.Screen
           name="Tài khoản"
-          component={Account}
+          component={AccountStack}
           options={{
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="user" size={23} color={color} />

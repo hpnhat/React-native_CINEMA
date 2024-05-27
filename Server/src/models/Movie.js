@@ -16,10 +16,6 @@ const movieSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     directors: [
       {
         type: String,
@@ -37,6 +33,10 @@ const movieSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     duration: {
       // thời lượng phim
       type: Number,
@@ -47,16 +47,16 @@ const movieSchema = mongoose.Schema(
       ref: "Genre",
       required: true,
     },
-    movieType: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "MovieType",
-      },
-    ],
     ageRestriction: {
       // giới hạn độ tuổi
       type: Number,
       required: true,
+    },
+    views: {
+      type: Number
+    },
+    rate: {
+      type: Number
     },
     slug: {
       type: String,

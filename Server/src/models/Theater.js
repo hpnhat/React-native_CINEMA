@@ -50,11 +50,6 @@ const roomSchema = mongoose.Schema(
               required: true,
               default: 0, //  0 means available
             },
-            ticketPrice: {
-              type: Number,
-              required: true,
-              min: 0,
-            },
             description: {
               type: String,
               required: true,

@@ -11,6 +11,7 @@ interface FormFieldProps {
   control: any;
   value?: string;
   rules: any;
+  keyboardType?: any;
 }
 const FormField = ({
   name,
@@ -20,6 +21,7 @@ const FormField = ({
   control,
   value,
   rules,
+  keyboardType,
   ...props
 }: FormFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,13 +40,14 @@ const FormField = ({
             <>
               <View className="w-full h-14 px-4  rounded-2xl border-2 border-gray-200 focus:border-sky-500 flex flex-row items-center">
                 <TextInput
-                  className="flex-1 text-black font-psemibold text-xs"
+                  className="flex-1 text-white font-psemibold text-xs"
                   placeholderTextColor="#7B7B8B"
                   secureTextEntry={title === "Password" && !showPassword}
                   placeholder={placeholder}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  keyboardType={keyboardType}
                   {...props}
                 />
 
@@ -60,7 +63,9 @@ const FormField = ({
                   </TouchableOpacity>
                 )}
               </View>
-              {error && <Text className="text-red-600">{error.message}</Text>}
+              {error && (
+                <Text className="text-red-600 mt-1">{error.message}</Text>
+              )}
             </>
           )}
         />

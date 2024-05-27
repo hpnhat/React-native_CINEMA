@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import MovieDetail from "@/app/(tabs)/client/MovieDetail";
 import BookingSeats from "@/app/(tabs)/client/BookingSeats";
+import Setting from "@/app/(tabs)/client/Setting";
 
 const Stack = createNativeStackNavigator();
 

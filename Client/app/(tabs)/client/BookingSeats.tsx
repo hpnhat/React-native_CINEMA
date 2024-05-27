@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useRoute, RouteProp } from "@react-navigation/native";
 
 import { useNavigation } from "expo-router";
@@ -24,10 +24,18 @@ type MovieDetailRouteProp = RouteProp<
 const BookingSeats = () => {
   const navigation: any = useNavigation();
   const route = useRoute<MovieDetailRouteProp>();
-
   const { id } = route.params;
   const movie = filmData.find((value: Film) => value.id === id);
-  console.log(movie);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
+  const toggleSeatSelection = (rowIndex: number, colIndex: number) => {
+    const seatId = `${rowIndex}-${colIndex}`;
+    setSelectedSeats((prevSelectedSeats) =>
+      prevSelectedSeats.includes(seatId)
+        ? prevSelectedSeats.filter((seat) => seat !== seatId)
+        : [...prevSelectedSeats, seatId]
+    );
+  };
   return (
     <View>
       <ScrollView
@@ -35,7 +43,7 @@ const BookingSeats = () => {
         className="h-full bg-primary"
       >
         <View className="relative">
-          <View className="absolute w-full h-full drop-shadow-lg">
+          <View className="absolute w-full h-full  drop-shadow-lg">
             <Svg viewBox="0 10 100 50">
               <Path
                 d="M 10 25 Q 50 10 90 25 "
@@ -47,20 +55,28 @@ const BookingSeats = () => {
           </View>
           <View className="mt-20">
             <Text className="text-white text-center">Màn hình</Text>
-
             {Array.from({ length: 10 }).map((_, rowIndex) => (
               <View
                 key={rowIndex}
-                className="flex flex-row gap-2 justify-center items-center"
+                className="flex flex-row gap-3 justify-center items-center"
               >
-                {Array.from({ length: 5 }).map((_, colIndex) => (
-                  <MaterialIcons
-                    key={`${rowIndex}-${colIndex}`}
-                    name="chair"
-                    size={24}
-                    color="gray"
-                  />
-                ))}
+                <Text className="text-white">{rowIndex}</Text>
+                {Array.from({ length: 10 }).map((_, colIndex) => {
+                  const seatId = `${rowIndex}-${colIndex}`;
+                  const isSelected = selectedSeats.includes(seatId);
+                  return (
+                    <TouchableOpacity
+                      key={seatId}
+                      onPress={() => toggleSeatSelection(rowIndex, colIndex)}
+                    >
+                      <MaterialIcons
+                        name="chair"
+                        size={24}
+                        color={isSelected ? "white" : "gray"}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             ))}
           </View>

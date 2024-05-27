@@ -15,7 +15,6 @@ export const theaterValidation = Joi.object({
           column: Joi.number().integer().required(),
           row: Joi.number().integer().required(),
           status: Joi.number().integer().valid(0, 1).default(0),
-          ticketPrice: Joi.number().min(0).required(),
           description: Joi.string().required().min(1),
           seatsInGroup: Joi.array().items(
             Joi.object({
@@ -30,6 +29,3 @@ export const theaterValidation = Joi.object({
   ),
   status: Joi.boolean().default(true),
 });
-
-
-

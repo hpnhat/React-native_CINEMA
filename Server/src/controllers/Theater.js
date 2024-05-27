@@ -92,3 +92,20 @@ export const update = async (req, res) => {
     });
   }
 };
+export const remove = async (req, res) => {
+  try {
+    const data = await Theater.findByIdAndDelete({ _id: req.params.id });
+    if (!data) {
+      throw new Error(`Failed to delete category`);
+    }
+    return res.status(200).json({
+      message: "Remove success",
+      data,
+    });
+  } catch (error) {
+    return res.json({
+      name: error.name,
+      message: error.message,
+    });
+  }
+};

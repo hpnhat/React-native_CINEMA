@@ -12,6 +12,7 @@ import MovieDetail from "@/app/(tabs)/client/MovieDetail";
 
 const RootLayout = () => {
   const state = useNavigationState((state) => state);
+  console.log(state);
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(splash)/index" component={Splash} />
@@ -24,7 +25,6 @@ const RootLayout = () => {
         name="navigators/client/ClientRoute"
         component={ClientRoute}
       />
-      <Stack.Screen name="MovieDetail" component={MovieDetail} />
       <Stack.Screen name="(auth)" component={AuthLayout} />
     </Stack.Navigator>
   );
