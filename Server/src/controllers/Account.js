@@ -1,8 +1,13 @@
 import Account from "../models/Account.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { signInValidator, signUpValidator } from "../validations/auth.js";
+import { signInValidator, signUpValidator } from "../validations/Account.js";
+import textflow from "textflow.js";
 console.log(process.env.SECRET_CODE);
+textflow.useKey(
+  "dxcNXHKvkZ03q5UwISPhcsIwbw4W4guVbgzM3VLoznM6ONDXqq99igDMrmS3YbV6"
+);
+
 const { SECRET_CODE } = process.env;
 const { REFRESH_CODE } = process.env;
 export const getById = async (req, res) => {
@@ -47,10 +52,16 @@ export const signUp = async (req, res) => {
       const errors = error.details.map((err) => err.message);
       return res.status(400).json({ message: errors });
     }
-    const userExists = await Account.findOne({ email: req.body.email });
-    if (userExists) {
+    const emailExists = await Account.findOne({ email: req.body.email });
+    const phoneExists = await Account.findOne({ phone: req.body.phone });
+    if (emailExists) {
       return res.status(400).json({
         message: "Email đã tồn tại, vui lòng sử dụng email khác",
+      });
+    }
+    if (phoneExists) {
+      return res.status(400).json({
+        message: "Số điện thoại đã tồn tại, vui lòng kiểm tra lại",
       });
     }
     const passwordEncryption = await bcrypt.hash(req.body.password, 10);
@@ -82,7 +93,7 @@ export const signIn = async (req, res) => {
       const errors = error.details.map((err) => err.message);
       return res.status(400).json({ message: errors });
     }
-    const userExists = await Account.findOne({ email: req.body.email });
+    const userExists = await Account.findOne({ phone: req.body.phone });
     if (!userExists) {
       return res.status(400).json({
         message: "Email không tồn tại trên hệ thống",
@@ -120,6 +131,31 @@ export const signIn = async (req, res) => {
       name: error.name,
       message: error.message,
     });
+  }
+};
+
+export const verify = async (req, res) => {
+  try {
+    const { phone } = req.body.phone;
+
+    const phoneExists = await Account.findOne({ phone });
+
+    if (phoneExists) {
+      return res.status(400).json({
+        message: "Số điện thoại đã tồn tại, vui lòng kiểm tra lại",
+      });
+    }
+    let result = await textflow.verifyCode(phone);
+
+    if (result.ok) {
+      return res.status(200).json({ success: true });
+    }
+    return res.status(400).json({ success: false });
+  } catch (error) {
+    console.error("Error verifying phone:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };
 const generateAccessToken = (user) => {

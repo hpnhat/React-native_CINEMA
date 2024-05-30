@@ -6,16 +6,20 @@ import {
   View,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import { images } from "@/constants";
+import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getLoginInfo } from "@/utils/authStorage";
 
 const Account = () => {
+  const { user } = useSelector((state: any) => state.auth);
+  const loginInfo = getLoginInfo();
   const navigation: any = useNavigation();
   return (
     <View className="bg-primary h-full">
-      <View className="absolute right-9 top-12"></View>
       <SafeAreaView>
         <View className="flex flex-row items-center justify-between px-6">
           <View className="flex-1 items-center">

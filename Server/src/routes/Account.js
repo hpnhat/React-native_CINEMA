@@ -6,10 +6,12 @@ import {
   refreshToken,
   signIn,
   signUp,
+  verify,
 } from "../controllers/Account.js";
 const routerAccount = Router();
 
-routerAccount.post("/register", signUp);
+routerAccount.post("/sign-up", signUp);
+routerAccount.post("/verify", verify);
 routerAccount.post("/sign-in", signIn);
 routerAccount.post("/log-out", logOut);
 routerAccount.get("/user/:id", getById);

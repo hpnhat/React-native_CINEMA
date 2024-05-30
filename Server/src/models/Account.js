@@ -2,15 +2,11 @@ import mongoose from "mongoose";
 
 const accountSchema = new mongoose.Schema(
   {
-    firstName: {
+    fullName: {
       type: String,
       required: true,
     },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    birthday: {
+    birthDate: {
       type: Date,
       required: true,
     },
@@ -19,13 +15,21 @@ const accountSchema = new mongoose.Schema(
       required: true,
       undefined: true,
     },
+    phone: {
+      type: Number,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
     },
     role: {
       type: String,
-      default: "user",
+      default: "member",
     },
   },
   {

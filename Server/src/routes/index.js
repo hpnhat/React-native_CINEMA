@@ -1,5 +1,5 @@
 import { Router } from "express";
-import routerAccount from "./account.js";
+import routerAccount from "./Account.js";
 import routerCinema from "./Cinema.js";
 import routerGenre from "./Genre.js";
 import routerTheater from "./Theater.js";

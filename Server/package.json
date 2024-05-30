@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.2",
     "mongoose-paginate-v2": "^1.8.0",
-    "mongoose-slug-updater": "^3.3.0"
+    "mongoose-slug-updater": "^3.3.0",
+    "textflow.js": "^0.1.4"
   }
 }

@@ -13,7 +13,6 @@ export const create = async (req, res) => {
       });
     }
     const data = await Cinema(req.body).save();
-    console.log(data)
     if (!data) {
       throw new Error(`Error creating`);
     }

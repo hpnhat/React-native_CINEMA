@@ -15,32 +15,40 @@ import CustomButton from "@/components/UI/CustomButton";
 import FormField from "@/components/UI/FormField";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 import { images } from "../../constants";
-type Input = {
-  email: string;
-  password: string;
-};
-
+import { SignInSchema } from "@/common/validations/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthSignIn } from "@/common/services/auth";
+import { IAuthSignIn } from "@/common/interfaces/Auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignIn = () => {
   const navigation: any = useNavigation();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Input>();
-  const onSignInPress = (data: Input) => {
-    console.log(data);
+  } = useForm<IAuthSignIn>({ resolver: joiResolver(SignInSchema) });
+  const dispatch = useDispatch<any>();
+  const { loading, error } = useSelector((state: any) => state.auth);
+  const onSignInPress = async (data: IAuthSignIn) => {
+    try {
+      await dispatch(AuthSignIn(data));
+      navigation.replace("navigators/client/ClientTab");
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
-
+  // console.log(error)
   return (
-    <View>
+    <View className="bg-primary h-full flex justify-center">
       <KeyboardAvoidingView
         className="flex justify-center"
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View className=" w-full bg-primary flex justify-center h-screen px-4">
+          <View className=" w-full flex justify-center px-4">
             <Image
               source={images.logo}
               resizeMode="contain"
@@ -50,10 +58,11 @@ const SignIn = () => {
               <FormField
                 title="Tài khoản"
                 otherStyles=""
-                placeholder="Email hoặc Số điện thoại"
-                name={"username"}
+                placeholder="Số điện thoại"
+                name={"phone"}
                 control={control}
-                rules={{ required: "Please enter your email" }}
+                rules={{ required: true }}
+                errors={errors}
               />
               <FormField
                 title="Password"
@@ -61,7 +70,8 @@ const SignIn = () => {
                 placeholder={"Mật khẩu"}
                 name={"password"}
                 control={control}
-                rules={{ required: "Please enter your password" }}
+                rules={{ required: true }}
+                errors={errors}
               />
               <Link
                 className="w-full text-sky-500 text-right my-4"

@@ -12,6 +12,7 @@ interface FormFieldProps {
   value?: string;
   rules: any;
   keyboardType?: any;
+  errors: any;
 }
 const FormField = ({
   name,
@@ -22,6 +23,7 @@ const FormField = ({
   value,
   rules,
   keyboardType,
+  errors,
   ...props
 }: FormFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,10 +35,7 @@ const FormField = ({
           name={name}
           control={control}
           rules={rules}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <>
               <View className="w-full h-14 px-4  rounded-2xl border-2 border-gray-200 focus:border-sky-500 flex flex-row items-center">
                 <TextInput
@@ -63,8 +62,10 @@ const FormField = ({
                   </TouchableOpacity>
                 )}
               </View>
-              {error && (
-                <Text className="text-red-600 mt-1">{error.message}</Text>
+              {errors[name] && (
+                <Text className=" mt-1" style={{ color: "#FF4D4D" }}>
+                  {errors[name].message}
+                </Text>
               )}
             </>
           )}

@@ -7,26 +7,30 @@ import ClientTab from "./navigators/client/ClientTab";
 import ClientRoute from "./navigators/client/ClientRoute";
 const Stack = createNativeStackNavigator();
 import { useNavigationState } from "@react-navigation/native";
-import MovieDetail from "@/app/(tabs)/client/MovieDetail";
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+import { Provider } from "react-redux";
+import store from "@/common/redux/store";
 
 const RootLayout = () => {
   const state = useNavigationState((state) => state);
-  console.log(state);
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(splash)/index" component={Splash} />
-      <Stack.Screen
-        name="navigators/AdminNavigator"
-        component={AdminNavigator}
-      />
-      <Stack.Screen name="navigators/client/ClientTab" component={ClientTab} />
-      <Stack.Screen
-        name="navigators/client/ClientRoute"
-        component={ClientRoute}
-      />
-      <Stack.Screen name="(auth)" component={AuthLayout} />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(splash)/index" component={Splash} />
+        <Stack.Screen
+          name="navigators/AdminNavigator"
+          component={AdminNavigator}
+        />
+        <Stack.Screen
+          name="navigators/client/ClientTab"
+          component={ClientTab}
+        />
+        <Stack.Screen
+          name="navigators/client/ClientRoute"
+          component={ClientRoute}
+        />
+        <Stack.Screen name="(auth)" component={AuthLayout} />
+      </Stack.Navigator>
+    </Provider>
   );
 };
 

@@ -16,6 +16,11 @@ const AuthLayout = () => {
         name="sign-up"
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        component={SignUp}
+        name="sign-up"
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
